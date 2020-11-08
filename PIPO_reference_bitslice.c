@@ -1,26 +1,27 @@
-/*
-============================================================================
-Name        : PIPO_RAND.c
-Author      :
-Version     :
-Copyright   : Your copyright notice
-Description : Hello World in C, Ansi-style
-============================================================================
-*/
 
-#include <stdio.h>      /* printf, NULL */
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define HARDWARE
 #define SOFTWARE
 
 #define DEBUG
 
+#define PIPO64_128
+//#define PIPO64_256
+
+#ifdef PIPO64_128
 #define ROUND 13
 #define SIZE 2				//64 = 32 * 2
 #define INT_NUM 2			//64 = 32 * 2
 #define MASTER_KEY_SIZE 2	//128 = 64 * 2
+#elif defined PIPO64_256
+#define ROUND 15
+#define SIZE 2
+#define INT_NUM 2
+#define MASTER_KEY_SIZE 4	//256 = 64 * 2
+#endif
 
 typedef unsigned char u8;
 typedef unsigned short u16;
@@ -191,7 +192,7 @@ void ROUND_KEY_GEN() {
 	for (i = 0; i<SIZE; i++) 
 		PLAIN_TEXT[i] = rand() | (rand() << 16);
 	
-	//test vector
+	//PIPO-64/128,PIPO-64/256 test vector
 	PLAIN_TEXT[0] = 0x1E270026;
 	PLAIN_TEXT[1] = 0x098552F6;
 		
@@ -202,12 +203,22 @@ void ROUND_KEY_GEN() {
 	for (i = 0; i < MASTER_KEY_SIZE; i++) 
 		for (j = 0; j < INT_NUM; j++) 
 			MASTER_KEY[INT_NUM*i + j] = rand() | (rand() << 16);	
-	//test vector
+	//PIPO-64/128 test vector
 	MASTER_KEY[0] = 0x2E152297;
 	MASTER_KEY[1] = 0x7E1D20AD;
 	MASTER_KEY[2] = 0x779428D2;
 	MASTER_KEY[3] = 0x6DC416DD;
-	
+
+
+	////PIPO-64/256 test vector
+	//MASTER_KEY[7] = 0x34386a09;
+	//MASTER_KEY[6] = 0x43116e68;
+	//MASTER_KEY[5] = 0x25c471ff;
+	//MASTER_KEY[4] = 0x72e5709c;
+	//MASTER_KEY[3] = 0x6dc416dd;
+	//MASTER_KEY[2] = 0x779428d2;
+	//MASTER_KEY[1] = 0x7e1d20ad;
+	//MASTER_KEY[0] = 0x2e152297;
 
 	for (i = MASTER_KEY_SIZE; i >0; i--) {
 		for (j = INT_NUM; j >0; j--) {
