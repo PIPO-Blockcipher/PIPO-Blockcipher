@@ -14,7 +14,7 @@ Ciphertext: 0x6B6B2981_AD5D0327
 PIPO-64/256
 Plaintext: 0x098552F6_1E270026  
 Secret key: 0x009A3AA4_76A96DB5_54A71206_26D15633_6DC416DD_779428D2_7E1D20AD_2E152297
-Ciphertext: 0xA9E3EFD1_37C1F3B4
+Ciphertext: 0x816DAE6F_B6523889
 
 ## PIPO_Analysis.exe
 Differential and Linear trail searching program for PIPO.
